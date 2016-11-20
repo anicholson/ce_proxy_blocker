@@ -6,6 +6,21 @@ require 'bundler/setup'
 require 'capybara'
 require 'capybara/webkit'
 require 'capybara/dsl'
+require 'envied'
+
+ENVied.require
+
+def username
+  ENVied.CE_USERNAME
+end
+
+def password
+  ENVied.CE_PASSWORD
+end
+
+def filter_user
+  ENVied.CE_FILTER_USERNAME
+end
 
 BASE_URL = 'http://covenanteyes.com/my_account'
 SERVERS  = %w(
@@ -28,13 +43,13 @@ include Capybara::DSL
 visit '/myaccount/login/'
 
 page.within('#sign_in_form') do
-  fill_in 'id_sign_in_username', with: ENV['CE_USERNAME']
-  fill_in 'id_sign_in_password', with: ENV['CE_PASSWORD']
+  fill_in 'id_sign_in_username', with: username
+  fill_in 'id_sign_in_password', with: password
 
   click_on 'Sign in'
 end
 
-visit "/myaccount/filter/users/#{ENV['CE_FILTER_USERNAME']}/allow-block-lists"
+visit "/myaccount/filter/users/#{filter_user}/allow-block-lists"
 
 page.within('.block_list') do
   servers.each do |server|

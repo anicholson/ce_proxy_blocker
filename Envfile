@@ -1,0 +1,3 @@
+variable :CE_USERNAME, :string
+variable :CE_PASSWORD, :string
+variable :CE_FILTER_USERNAME, :string
